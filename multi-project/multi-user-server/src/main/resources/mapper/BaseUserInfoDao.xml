@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.multi.user.dao.BaseUserInfoDao">
+
+	<resultMap type="com.multi.user.entity.BaseUserInfo" id="baseUserInfo">
+		<id property="userId" column="user_id" />
+		<result property="account" column="account" />
+		<result property="userName" column="user_name" />
+		<result property="password" column="password" />
+		<result property="disable" column="disable" />
+		<result property="operand" column="operand" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="lastLoginTime" column="last_login_time" />
+	</resultMap>
+
+
+	<sql id="baseUserInfoColumn">
+		a.user_id,
+		a.account,
+		a.user_name,
+		a.password,
+		a.disable,
+		a.operand,
+		a.create_time,
+		a.update_time,
+		a.last_login_time
+	</sql>
+
+	<insert id="insert" keyProperty="id"
+		parameterType="java.util.Map">
+		insert into base_user_info(
+		account,
+		user_name,
+		password,
+		disable,
+		operand,
+		create_time,
+		update_time,
+		last_login_time
+		)values(
+		#{account},
+		#{userName},
+		#{password},
+		#{disable},
+		#{operand},
+		#{createTime},
+		#{updateTime},
+		#{lastLoginTime}
+		)
+	</insert>
+	<update id="update" keyProperty="id"
+		parameterType="java.util.Map">
+		update
+		base_user_info set
+		user_name = #{userName},
+		password = #{password},
+		operand = #{operand},
+		update_time = #{update_time}
+		last_login_time = #{lastLoginTime}
+		where
+		user_id = #{userId} and account = #{account}
+	</update>
+	
+	<update id="updateLoginTime" keyProperty="id"
+		parameterType="java.util.Map">
+		update
+		base_user_info set
+		last_login_time = #{lastLoginTime},
+		operand = #{operand}
+		where
+		user_id = #{userId} and account = #{account}
+	</update>
+
+	<update id="delete" keyProperty="id"
+		parameterType="java.util.Map">
+		update
+		base_user_info set
+		disable = #{disable},
+		operand = #{operand}
+		where
+		user_id = #{userId} and account = #{account}
+	</update>
+
+	<select id="getByParams" resultMap="baseUserInfo" parameterType="java.util.Map">
+		select
+		<include refid="baseUserInfoColumn"></include>
+		from base_user_info a
+		<where>
+	 <if test="isEmpty==false">	
+       <if test="userId!=null and userId!=''">
+          	and user_id = #{userId}
+        </if> 
+         <if test="account!=null and account!=''">
+          	and account = #{account}
+        </if> 
+        <if test="userName!=null and userName!=''">
+          	and user_name = #{userId}
+        </if>
+        <if test="password!=null and password!=''">
+          	and password = #{password}
+        </if>
+        <if test="disable!=null and disable!=''">
+          	and disable = #{disable}
+        </if>
+        <if test="createTime!=null and createTime!=''">
+          	 and create_time =  #{createTime} 
+        </if>
+        <if test="updateTime!=null and updateTime!=''">
+       		 and update_time =  #{updateTime} 
+        </if>
+         <if test="updateTime!=null and updateTime!=''">
+       		 and last_login_time =  #{lastLoginTime} 
+        </if>
+      </if>
+        </where>
+	</select>
+</mapper>

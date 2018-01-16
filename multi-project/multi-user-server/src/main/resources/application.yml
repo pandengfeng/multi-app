@@ -1,0 +1,51 @@
+eureka: 
+   client: 
+    region: shenzheng
+    serviceUrl: 
+      defaultZone: http://localhost:8761/eureka/
+   instance:
+    preferIpAddress: true
+server: 
+  port: 8762
+  tomcat: 
+    uri-encoding: UTF-8
+spring: 
+  application: 
+    name: multi-user-server
+  http: 
+    encoding: 
+      force:  true 
+      charset:  UTF-8
+      enabled:  true
+  mvc:  
+    message-codes-resolver:
+      format: PREFIX_ERROR_CODE
+    throw-exception-if-no-handler-found:  true
+  resources:  
+    add-mappings: false
+  datasource:
+    driver-class-name:  com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/local?stringtype=unspecified&characterEncoding=utf8&useSSL=true
+    username: root
+    password: 123456
+#  rabbitmq: 
+#    host: localhost
+#    port: 5672
+#    username: appusername
+#    password: pdf8371759
+  redis:  
+    database: 0
+    host: localhost
+    port: 6379
+    password: 
+    pool: 
+      max-active: 100
+      max-wait: 100
+      max-idle: 5
+      min-idle: 1
+    timeout:  3000
+mybatis: 
+     mapperLocations: classpath:mapper/*.xml
+logging:
+    #配置日志基本地址
+    home: C:/Users/Administrator/Desktop/Log/${spring.application.name}

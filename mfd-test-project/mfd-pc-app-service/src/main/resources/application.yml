@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: pc-app-service
+  cloud:
+    config:
+        profile: dev
+        label:  master
+        uri:  http://localhost:8888

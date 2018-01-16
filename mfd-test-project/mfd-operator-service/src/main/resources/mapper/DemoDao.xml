@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mfd.demo.dao.DemoDao" >
+		
+	<resultMap type="com.mfd.demo.entity.OpsConfig" id="opsConfig">
+	  	<id property="id" column="id"/>
+        <result property="key" column="key" />
+		<result property="value" column="value" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="optimistic" column="optimistic" />
+		<result property="optimisticLastsync" column="optimistic_lastsync" />
+	</resultMap>
+	
+	<sql id="opsConfigColumn">
+		a.id,a.key,a.value,a.optimistic,a.create_time,a.update_time,a.optimistic_lastsync
+	</sql>
+	
+	<insert id="addKey" keyProperty="id" parameterType="com.mfd.demo.entity.OpsConfig">
+		insert into config_ops (
+		id,
+		key,
+		value,
+		optimistic,
+		create_time,
+		update_time,
+		optimistic_lastsync
+		)values(
+		nextval('seq_config_ops_id'),
+		#{key},
+		#{value},
+		#{optimistic},
+		#{createTime},
+		#{updateTime},
+		#{optimisticLastsync}
+		)
+	</insert>
+	
+	<insert id="batchInsert"  parameterType="java.util.List">
+		insert into config_ops (
+		id,
+		key,
+		value,
+		optimistic,
+		create_time,
+		update_time,
+		optimistic_lastsync
+		)values
+		<foreach collection ="list" item="opsConfig" index= "index" separator =",">
+		(nextval('seq_config_ops_id'),
+		#{opsConfig.key},
+		#{opsConfig.value},
+		#{opsConfig.optimistic},
+		#{opsConfig.createTime},
+		#{opsConfig.updateTime},
+		#{opsConfig.optimisticLastsync}
+			)
+			</foreach>
+	</insert>
+	
+	<select id="getByKey" resultMap="opsConfig" parameterType="java.util.Map">
+			select 
+			<include refid="opsConfigColumn"></include> 
+			from config_ops a
+			where key = #{key}
+	</select>
+	
+	<update id="updateKeyValue" parameterType="com.mfd.demo.entity.OpsConfig" keyProperty="id">
+		update config_ops set value = #{value},update_time = #{updateTime} where key = #{key} 
+	</update>
+	
+</mapper>

@@ -1,0 +1,1 @@
+delete from base_user_info where account = 'test' and user_name = 'pandengfeng';

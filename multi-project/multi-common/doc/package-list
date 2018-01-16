@@ -1,0 +1,10 @@
+com.multi.aop.config
+com.multi.bean.base
+com.multi.common.util
+com.multi.controller.base
+com.multi.dao.base
+com.multi.entity.base
+com.multi.jwt.config
+com.multi.redis.config
+com.multi.test.base
+com.multi.user.entity

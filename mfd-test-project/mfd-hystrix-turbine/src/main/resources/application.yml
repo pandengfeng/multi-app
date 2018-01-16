@@ -1,0 +1,7 @@
+spring:
+  application.name: hystrix-turbine
+  cloud:
+    config:
+      profile: dev
+      label:  master
+      uri:  http://localhost:8888
