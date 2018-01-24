@@ -27,9 +27,9 @@
 		a.last_login_time
 	</sql>
 
-	<insert id="insert" keyProperty="id"
-		parameterType="java.util.Map">
-		insert into base_user_info(
+	<insert id="insert" keyProperty="id" parameterType="java.util.Map">
+		insert into
+		base_user_info(
 		account,
 		user_name,
 		password,
@@ -49,31 +49,30 @@
 		#{lastLoginTime}
 		)
 	</insert>
-	<update id="update" keyProperty="id"
-		parameterType="java.util.Map">
+	<update id="update" keyProperty="id" parameterType="java.util.Map">
 		update
 		base_user_info set
 		user_name = #{userName},
 		password = #{password},
 		operand = #{operand},
 		update_time = #{update_time}
-		last_login_time = #{lastLoginTime}
-		where
-		user_id = #{userId} and account = #{account}
-	</update>
-	
-	<update id="updateLoginTime" keyProperty="id"
-		parameterType="java.util.Map">
-		update
-		base_user_info set
-		last_login_time = #{lastLoginTime},
-		operand = #{operand}
+		last_login_time =
+		#{lastLoginTime}
 		where
 		user_id = #{userId} and account = #{account}
 	</update>
 
-	<update id="delete" keyProperty="id"
-		parameterType="java.util.Map">
+	<update id="updateLoginTime" keyProperty="id" parameterType="java.util.Map">
+		update
+		base_user_info set
+		last_login_time = #{lastLoginTime},
+		operand =
+		#{operand}
+		where
+		user_id = #{userId} and account = #{account}
+	</update>
+
+	<update id="delete" keyProperty="id" parameterType="java.util.Map">
 		update
 		base_user_info set
 		disable = #{disable},
@@ -86,33 +85,37 @@
 		select
 		<include refid="baseUserInfoColumn"></include>
 		from base_user_info a
-		<where>
-	 <if test="isEmpty==false">	
-       <if test="userId!=null and userId!=''">
-          	and user_id = #{userId}
-        </if> 
-         <if test="account!=null and account!=''">
-          	and account = #{account}
-        </if> 
-        <if test="userName!=null and userName!=''">
-          	and user_name = #{userId}
-        </if>
-        <if test="password!=null and password!=''">
-          	and password = #{password}
-        </if>
-        <if test="disable!=null and disable!=''">
-          	and disable = #{disable}
-        </if>
-        <if test="createTime!=null and createTime!=''">
-          	 and create_time =  #{createTime} 
-        </if>
-        <if test="updateTime!=null and updateTime!=''">
-       		 and update_time =  #{updateTime} 
-        </if>
-         <if test="updateTime!=null and updateTime!=''">
-       		 and last_login_time =  #{lastLoginTime} 
-        </if>
-      </if>
-        </where>
+		<if test="isEmpty==false">
+			where 1 = 1
+			<if test="userId!=null and userId!=''">
+				and user_id = #{userId}
+			</if>
+			<if test="account!=null and account!=''">
+				and account = #{account}
+			</if>
+			<if test="userName!=null and userName!=''">
+				and user_name = #{userId}
+			</if>
+			<if test="password!=null and password!=''">
+				and password = #{password}
+			</if>
+			<if test="disable!=null and disable!=''">
+				and disable = #{disable}
+			</if>
+			<if test="createTime!=null and createTime!=''">
+				and create_time = #{createTime}
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+				and update_time = #{updateTime}
+			</if>
+			<if test="updateTime!=null and updateTime!=''">
+				and last_login_time = #{lastLoginTime}
+			</if>
+		</if>
+
+		<if test="isEmpty==true">
+			where 1 != 1
+		</if>
+
 	</select>
 </mapper>
