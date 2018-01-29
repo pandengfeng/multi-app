@@ -1,0 +1,45 @@
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+$(function(){
+	//错误信息
+	var ErrorMsg = "${ErrorMsg}";
+	if(ErrorMsg != ""){
+		console.log(ErrorMsg);
+	}
+	//提交按钮
+	$("#select").click(function(){
+		var objJson = $("#mainForm").serializeObject();
+		sessionStorage.accountBillDetail =JSON.stringify(objJson);
+	})
+	//accountBillDetail key保持唯一
+	var jsonObject =eval('('+sessionStorage.accountBillDetail+')');
+	for(x in jsonObject){
+		var name=jsonObject[x];
+		var htm=$("[name = '"+x+"']:eq(0)");
+		if(htm.attr("type")!="hidden"){
+			htm.val(name);
+		}
+		
+		if(htm.attr("type")=="checkbox"){
+			for(v in name){
+				var ele = $("[name='"+x+"']:[value='"+name[v]+"']");
+				ele.attr("checked",true);
+			}
+		}
+	}
+}
+)
