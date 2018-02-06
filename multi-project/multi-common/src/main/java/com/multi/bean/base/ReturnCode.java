@@ -15,7 +15,8 @@ public enum ReturnCode {
 	CODE0002("0002","参数验证错误"),
 	CODE0003("0003","未知错误"),
 	CODE0004("0004","验证错误"),
-	CODE0005("0005","资源不存在");
+	CODE0005("0005","资源不存在"),
+	CODE0006("0006","资源占用");
 	private String code;
 
 	private String msg;
