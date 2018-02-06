@@ -110,15 +110,6 @@ public class BaseUserInfoControllerTest extends BaseTest{
 			Assert.assertEquals(ReturnCode.CODE0000.getCode(),resBean.get("returnCode"));
 		} catch (JSONException e) {
 		}
-		
-		body=this.doPost(params, "/user/register");
-		try {
-			JSONObject resBean = new JSONObject(body);
-			
-			Assert.assertEquals(ReturnCode.CODE0006.getCode(),resBean.get("returnCode"));
-		} catch (JSONException e) {
-		}
-		
 		//帐号为空
 		body = null;
 		params.remove("account");
